@@ -1,24 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kubepro-deployment
+  name: new-villa-deployment
+  labels:
+    app: new-villa
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
-      app: kubepro
+      app: new-villa
   template:
     metadata:
       labels:
-        app: kubepro
+        app: new-villa
     spec:
       containers:
-        - name: kubepro
-          image: arishwaran/new-villa
-          ports:
-            - containerPort: 80
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              echo "Served by $(hostname)" > /usr/share/nginx/html/index.html && \
-              nginx -g "daemon off;"
+      - name: new-villa-container
+        image: arishwaran/new-villa:latest
+        ports:
+        - containerPort: 80

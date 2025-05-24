@@ -1,12 +1,21 @@
-apiVersion: v1
-kind: Service
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: kubepro-service
+  name: new-villa-deployment
+  labels:
+    app: new-villa
 spec:
-  type: LoadBalancer
+  replicas: 2
   selector:
-    app: kubepro
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+    matchLabels:
+      app: new-villa
+  template:
+    metadata:
+      labels:
+        app: new-villa
+    spec:
+      containers:
+      - name: new-villa-container
+        image: arishwaran/new-villa:latest
+        ports:
+        - containerPort: 80
