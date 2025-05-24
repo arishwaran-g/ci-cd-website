@@ -1,21 +1,14 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: new-villa-deployment
+  name: new-villa-service
   labels:
     app: new-villa
 spec:
-  replicas: 2
+  type: LoadBalancer
   selector:
-    matchLabels:
-      app: new-villa
-  template:
-    metadata:
-      labels:
-        app: new-villa
-    spec:
-      containers:
-      - name: new-villa-container
-        image: arishwaran/new-villa:latest
-        ports:
-        - containerPort: 80
+    app: new-villa
+  ports:
+    - protocol: TCP
+      port: 80        # Port exposed by the LoadBalancer
+      targetPort: 80  # Port your container is listening on
